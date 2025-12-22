@@ -1,0 +1,128 @@
+[
+    {
+        "model": "lotteries.lottery",
+        "pk": 1,
+        "fields": {
+            "name": "Mega-Sena",
+            "slug": "megasena",
+            "api_identifier": "megasena",
+            "numbers_count": 6,
+            "min_number": 1,
+            "max_number": 60,
+            "color": "#209869",
+            "is_active": true
+        }
+    },
+    {
+        "model": "lotteries.lottery",
+        "pk": 2,
+        "fields": {
+            "name": "Lotofácil",
+            "slug": "lotofacil",
+            "api_identifier": "lotofacil",
+            "numbers_count": 15,
+            "min_number": 1,
+            "max_number": 25,
+            "color": "#930089",
+            "is_active": true
+        }
+    },
+    {
+        "model": "lotteries.lottery",
+        "pk": 3,
+        "fields": {
+            "name": "Quina",
+            "slug": "quina",
+            "api_identifier": "quina",
+            "numbers_count": 5,
+            "min_number": 1,
+            "max_number": 80,
+            "color": "#260085",
+            "is_active": true
+        }
+    },
+    {
+        "model": "lotteries.lottery",
+        "pk": 4,
+        "fields": {
+            "name": "Lotomania",
+            "slug": "lotomania",
+            "api_identifier": "lotomania",
+            "numbers_count": 20,
+            "min_number": 0,
+            "max_number": 99,
+            "color": "#f78100",
+            "is_active": true
+        }
+    },
+    {
+        "model": "lotteries.lottery",
+        "pk": 5,
+        "fields": {
+            "name": "Timemania",
+            "slug": "timemania",
+            "api_identifier": "timemania",
+            "numbers_count": 7,
+            "min_number": 1,
+            "max_number": 80,
+            "color": "#00ff00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "lotteries.lottery",
+        "pk": 6,
+        "fields": {
+            "name": "Dupla Sena",
+            "slug": "duplasena",
+            "api_identifier": "duplasena",
+            "numbers_count": 6,
+            "min_number": 1,
+            "max_number": 50,
+            "color": "#a61317",
+            "is_active": true
+        }
+    },
+    {
+        "model": "lotteries.lottery",
+        "pk": 7,
+        "fields": {
+            "name": "Federal",
+            "slug": "federal",
+            "api_identifier": "federal",
+            "numbers_count": 5,
+            "min_number": 1,
+            "max_number": 99999,
+            "color": "#004785",
+            "is_active": true
+        }
+    },
+    {
+        "model": "lotteries.lottery",
+        "pk": 8,
+        "fields": {
+            "name": "Dia de Sorte",
+            "slug": "diadesorte",
+            "api_identifier": "diadesorte",
+            "numbers_count": 7,
+            "min_number": 1,
+            "max_number": 31,
+            "color": "#cb852b",
+            "is_active": true
+        }
+    },
+    {
+        "model": "lotteries.lottery",
+        "pk": 9,
+        "fields": {
+            "name": "Super Sete",
+            "slug": "supersete",
+            "api_identifier": "supersete",
+            "numbers_count": 7,
+            "min_number": 0,
+            "max_number": 9,
+            "color": "#a8cf45",
+            "is_active": true
+        }
+    }
+]

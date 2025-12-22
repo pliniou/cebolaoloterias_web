@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const Index = () => {
   // Featured lotteries for hero section
   const featuredLotteries = lotteries.slice(0, 3);
-  
+
   return (
     <Layout>
       <div className="p-4 lg:p-8 space-y-8 animate-fade-in">
@@ -25,10 +25,10 @@ const Index = () => {
               Cebolão Loterias
             </h1>
             <p className="text-lg text-primary-foreground/90 max-w-xl">
-              Acompanhe os resultados de todas as loterias da Caixa em um só lugar. 
+              Acompanhe os resultados de todas as loterias da Caixa em um só lugar.
               Resultados atualizados, estatísticas e muito mais.
             </p>
-            
+
             {/* Quick stats */}
             <div className="flex flex-wrap gap-4 mt-6">
               <div className="flex items-center gap-2 bg-primary-foreground/10 rounded-lg px-4 py-2">
@@ -95,42 +95,34 @@ const Index = () => {
         </section>
 
         {/* Info Cards */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="border-2">
-            <CardContent className="p-6 flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <TrendingUp className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-bold mb-2">Estatísticas</h3>
-              <p className="text-sm text-muted-foreground">
-                Análise completa dos números mais sorteados e tendências.
-              </p>
-            </CardContent>
-          </Card>
-          
-          <Card className="border-2">
-            <CardContent className="p-6 flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-4">
-                <Clock className="h-6 w-6 text-accent-foreground" />
-              </div>
-              <h3 className="font-bold mb-2">Histórico</h3>
-              <p className="text-sm text-muted-foreground">
-                Consulte resultados anteriores de todos os concursos.
-              </p>
-            </CardContent>
-          </Card>
-          
-          <Card className="border-2">
-            <CardContent className="p-6 flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center mb-4">
-                <Gift className="h-6 w-6 text-secondary-foreground" />
-              </div>
-              <h3 className="font-bold mb-2">Notificações</h3>
-              <p className="text-sm text-muted-foreground">
-                Receba alertas quando seus números forem sorteados.
-              </p>
-            </CardContent>
-          </Card>
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <a href="/meus-jogos" className="block group">
+            <Card className="border-2 hover:border-primary transition-colors cursor-pointer h-full">
+              <CardContent className="p-6 flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <TrendingUp className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="font-bold mb-2">Meus Jogos</h3>
+                <p className="text-sm text-muted-foreground">
+                  Salve seus palpites e gerencie suas apostas favoritas em um só lugar.
+                </p>
+              </CardContent>
+            </Card>
+          </a>
+
+          <a href="/conferencia" className="block group">
+            <Card className="border-2 hover:border-green-500 transition-colors cursor-pointer h-full">
+              <CardContent className="p-6 flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Clock className="h-6 w-6 text-green-600 dark:text-green-400" />
+                </div>
+                <h3 className="font-bold mb-2">Conferência</h3>
+                <p className="text-sm text-muted-foreground">
+                  Confira automaticamente se seus jogos salvos foram premiados.
+                </p>
+              </CardContent>
+            </Card>
+          </a>
         </section>
       </div>
     </Layout>

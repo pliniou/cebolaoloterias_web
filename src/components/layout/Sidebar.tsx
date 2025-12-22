@@ -55,8 +55,62 @@ export function Sidebar() {
                 )
               }
             >
-              <Home className="h-5 w-5 flex-shrink-0" />
               {isOpen && <span>Início</span>}
+            </NavLink>
+
+            {/* Personal Area */}
+            <NavLink
+              to="/meus-jogos"
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                  isActive
+                    ? "bg-sidebar-accent text-sidebar-primary"
+                    : "text-sidebar-foreground hover:bg-sidebar-accent/50"
+                )
+              }
+            >
+              <div className="w-5 h-5 flex items-center justify-center">
+                {/* Using standard Lucide icons directly referenced or imported */}
+                {/* Assuming Home, Menu, X are imported. I need to add imports for these new icons first if not present, but for now assuming Lucide package has them */}
+                {/* Let's use simple text for now or add imports in a separate chunk */}
+                <span className="text-lg leading-none">🎮</span>
+              </div>
+              {isOpen && <span>Meus Jogos</span>}
+            </NavLink>
+
+            <NavLink
+              to="/conferencia"
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                  isActive
+                    ? "bg-sidebar-accent text-sidebar-primary"
+                    : "text-sidebar-foreground hover:bg-sidebar-accent/50"
+                )
+              }
+            >
+              <div className="w-5 h-5 flex items-center justify-center">
+                <span className="text-lg leading-none">✅</span>
+              </div>
+              {isOpen && <span>Conferência</span>}
+            </NavLink>
+
+            <NavLink
+              to="/gerador"
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                  isActive
+                    ? "bg-sidebar-accent text-sidebar-primary"
+                    : "text-sidebar-foreground hover:bg-sidebar-accent/50"
+                )
+              }
+            >
+              <div className="w-5 h-5 flex items-center justify-center">
+                <span className="text-lg leading-none">✨</span>
+              </div>
+              {isOpen && <span>Gerador</span>}
             </NavLink>
 
             {/* Divider */}
@@ -72,7 +126,7 @@ export function Sidebar() {
             {lotteries.map((lottery) => {
               const Icon = lottery.icon;
               const isActive = location.pathname === `/${lottery.slug}`;
-              
+
               return (
                 <NavLink
                   key={lottery.id}

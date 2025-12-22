@@ -57,18 +57,62 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Lottery colors
-        megasena: "hsl(var(--megasena))",
-        quina: "hsl(var(--quina))",
-        lotofacil: "hsl(var(--lotofacil))",
-        lotomania: "hsl(var(--lotomania))",
-        duplasena: "hsl(var(--duplasena))",
-        timemania: "hsl(var(--timemania))",
-        diadesorte: "hsl(var(--diadesorte))",
-        supersete: "hsl(var(--supersete))",
-        federal: "hsl(var(--federal))",
-        loteca: "hsl(var(--loteca))",
-        maismilionaria: "hsl(var(--maismilionaria))",
+        // Lottery colors with light/dark scales
+        megasena: {
+          light: "hsl(var(--megasena-light))",
+          DEFAULT: "hsl(var(--megasena))",
+          dark: "hsl(var(--megasena-dark))",
+        },
+        quina: {
+          light: "hsl(var(--quina-light))",
+          DEFAULT: "hsl(var(--quina))",
+          dark: "hsl(var(--quina-dark))",
+        },
+        lotofacil: {
+          light: "hsl(var(--lotofacil-light))",
+          DEFAULT: "hsl(var(--lotofacil))",
+          dark: "hsl(var(--lotofacil-dark))",
+        },
+        lotomania: {
+          light: "hsl(var(--lotomania-light))",
+          DEFAULT: "hsl(var(--lotomania))",
+          dark: "hsl(var(--lotomania-dark))",
+        },
+        duplasena: {
+          light: "hsl(var(--duplasena-light))",
+          DEFAULT: "hsl(var(--duplasena))",
+          dark: "hsl(var(--duplasena-dark))",
+        },
+        timemania: {
+          light: "hsl(var(--timemania-light))",
+          DEFAULT: "hsl(var(--timemania))",
+          dark: "hsl(var(--timemania-dark))",
+        },
+        diadesorte: {
+          light: "hsl(var(--diadesorte-light))",
+          DEFAULT: "hsl(var(--diadesorte))",
+          dark: "hsl(var(--diadesorte-dark))",
+        },
+        supersete: {
+          light: "hsl(var(--supersete-light))",
+          DEFAULT: "hsl(var(--supersete))",
+          dark: "hsl(var(--supersete-dark))",
+        },
+        federal: {
+          light: "hsl(var(--federal-light))",
+          DEFAULT: "hsl(var(--federal))",
+          dark: "hsl(var(--federal-dark))",
+        },
+        loteca: {
+          light: "hsl(var(--loteca-light))",
+          DEFAULT: "hsl(var(--loteca))",
+          dark: "hsl(var(--loteca-dark))",
+        },
+        maismilionaria: {
+          light: "hsl(var(--maismilionaria-light))",
+          DEFAULT: "hsl(var(--maismilionaria))",
+          dark: "hsl(var(--maismilionaria-dark))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

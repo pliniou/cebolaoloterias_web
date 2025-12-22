@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
 import { LotteryPage } from "./pages/LotteryPage";
+import { MyGames } from "./pages/MyGames";
+import { Conference } from "./pages/Conference";
+import { Generator } from "./pages/Generator";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -19,6 +22,9 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/meus-jogos" element={<MyGames />} />
+            <Route path="/conferencia" element={<Conference />} />
+            <Route path="/gerador" element={<Generator />} />
             {/* Dynamic Lottery Route */}
             <Route path="/:slug" element={<LotteryPage />} />
             {/* Catch-all */}

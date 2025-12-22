@@ -39,18 +39,61 @@
 
     --radius: 0.75rem;
 
-    /* Lottery Colors */
-    --megasena: 142 71% 45%;
-    --quina: 262 83% 58%;
-    --lotofacil: 330 81% 60%;
-    --lotomania: 25 95% 53%;
-    --duplasena: 346 77% 50%;
-    --timemania: 142 69% 58%;
-    --diadesorte: 43 74% 49%;
-    --supersete: 199 89% 48%;
-    --federal: 262 52% 47%;
-    --loteca: 142 71% 45%;
-    --maismilionaria: 45 93% 47%;
+    /* Lottery Colors - Official Caixa Palette with Light/Dark Scales */
+    /* Mega-Sena - Verde Trevosa */
+    --megasena-light: 158 64% 52%;
+    --megasena: 158 64% 42%;
+    --megasena-dark: 158 64% 32%;
+
+    /* Quina - Roxo */
+    --quina-light: 261 63% 60%;
+    --quina: 261 63% 50%;
+    --quina-dark: 261 63% 40%;
+
+    /* Lotofácil - Rosa/Magenta */
+    --lotofacil-light: 330 85% 60%;
+    --lotofacil: 330 85% 50%;
+    --lotofacil-dark: 330 85% 40%;
+
+    /* Lotomania - Laranja */
+    --lotomania-light: 28 90% 55%;
+    --lotomania: 28 90% 45%;
+    --lotomania-dark: 28 90% 35%;
+
+    /* Dupla Sena - Vermelho */
+    --duplasena-light: 344 75% 55%;
+    --duplasena: 344 75% 45%;
+    --duplasena-dark: 344 75% 35%;
+
+    /* Timemania - Verde Claro */
+    --timemania-light: 145 58% 55%;
+    --timemania: 145 58% 45%;
+    --timemania-dark: 145 58% 35%;
+
+    /* Dia de Sorte - Marrom/Laranja */
+    --diadesorte-light: 35 70% 50%;
+    --diadesorte: 35 70% 40%;
+    --diadesorte-dark: 35 70% 30%;
+
+    /* Super Sete - Azul */
+    --supersete-light: 199 85% 52%;
+    --supersete: 199 85% 42%;
+    --supersete-dark: 199 85% 32%;
+
+    /* Federal - Roxo Escuro */
+    --federal-light: 270 50% 52%;
+    --federal: 270 50% 42%;
+    --federal-dark: 270 50% 32%;
+
+    /* Loteca - Verde */
+    --loteca-light: 142 71% 50%;
+    --loteca: 142 71% 40%;
+    --loteca-dark: 142 71% 30%;
+
+    /* +Milionária - Azul Marinho com Dourado */
+    --maismilionaria-light: 220 80% 52%;
+    --maismilionaria: 220 80% 40%;
+    --maismilionaria-dark: 220 80% 30%;
 
     /* Sidebar */
     --sidebar-background: 0 0% 100%;
@@ -171,18 +214,50 @@
     --input: 280 30% 88%;
     --ring: 280 85% 55%;
 
-    /* Lottery Colors - More vibrant */
-    --megasena: 160 84% 39%;
+    /* Lottery Colors - Vibrant version with scales */
+    --megasena-light: 158 74% 58%;
+    --megasena: 158 74% 48%;
+    --megasena-dark: 158 74% 38%;
+
+    --quina-light: 280 85% 65%;
     --quina: 280 85% 55%;
-    --lotofacil: 340 82% 52%;
-    --lotomania: 30 95% 50%;
-    --duplasena: 350 80% 45%;
-    --timemania: 160 70% 50%;
-    --diadesorte: 45 90% 45%;
-    --supersete: 200 95% 45%;
-    --federal: 280 60% 45%;
-    --loteca: 160 84% 39%;
-    --maismilionaria: 50 100% 50%;
+    --quina-dark: 280 85% 45%;
+
+    --lotofacil-light: 340 88% 62%;
+    --lotofacil: 340 88% 52%;
+    --lotofacil-dark: 340 88% 42%;
+
+    --lotomania-light: 30 95% 58%;
+    --lotomania: 30 95% 48%;
+    --lotomania-dark: 30 95% 38%;
+
+    --duplasena-light: 350 85% 55%;
+    --duplasena: 350 85% 45%;
+    --duplasena-dark: 350 85% 35%;
+
+    --timemania-light: 160 75% 55%;
+    --timemania: 160 75% 45%;
+    --timemania-dark: 160 75% 35%;
+
+    --diadesorte-light: 45 90% 52%;
+    --diadesorte: 45 90% 42%;
+    --diadesorte-dark: 45 90% 32%;
+
+    --supersete-light: 200 95% 52%;
+    --supersete: 200 95% 42%;
+    --supersete-dark: 200 95% 32%;
+
+    --federal-light: 280 65% 52%;
+    --federal: 280 65% 42%;
+    --federal-dark: 280 65% 32%;
+
+    --loteca-light: 160 84% 48%;
+    --loteca: 160 84% 38%;
+    --loteca-dark: 160 84% 28%;
+
+    --maismilionaria-light: 220 90% 55%;
+    --maismilionaria: 220 90% 45%;
+    --maismilionaria-dark: 220 90% 35%;
 
     /* Sidebar */
     --sidebar-background: 280 50% 99%;
@@ -216,7 +291,7 @@
   html {
     @apply scroll-smooth;
   }
-  
+
   html.transitioning,
   html.transitioning * {
     transition: background-color 350ms ease, color 350ms ease, border-color 350ms ease !important;
@@ -224,15 +299,16 @@
 }
 
 @layer utilities {
+
   /* Motion utilities */
   .transition-fast {
     transition-duration: var(--transition-fast);
   }
-  
+
   .transition-base {
     transition-duration: var(--transition-base);
   }
-  
+
   .transition-slow {
     transition-duration: var(--transition-slow);
   }
@@ -241,43 +317,43 @@
   .lottery-megasena {
     background-color: hsl(var(--megasena));
   }
-  
+
   .lottery-quina {
     background-color: hsl(var(--quina));
   }
-  
+
   .lottery-lotofacil {
     background-color: hsl(var(--lotofacil));
   }
-  
+
   .lottery-lotomania {
     background-color: hsl(var(--lotomania));
   }
-  
+
   .lottery-duplasena {
     background-color: hsl(var(--duplasena));
   }
-  
+
   .lottery-timemania {
     background-color: hsl(var(--timemania));
   }
-  
+
   .lottery-diadesorte {
     background-color: hsl(var(--diadesorte));
   }
-  
+
   .lottery-supersete {
     background-color: hsl(var(--supersete));
   }
-  
+
   .lottery-federal {
     background-color: hsl(var(--federal));
   }
-  
+
   .lottery-loteca {
     background-color: hsl(var(--loteca));
   }
-  
+
   .lottery-maismilionaria {
     background-color: hsl(var(--maismilionaria));
   }
@@ -286,7 +362,7 @@
   .hover-lift {
     @apply transition-all duration-250 ease-out;
   }
-  
+
   .hover-lift:hover {
     @apply -translate-y-1;
     box-shadow: var(--shadow-lg);
@@ -294,9 +370,19 @@
 
   /* Number ball animation */
   @keyframes ball-pop {
-    0% { transform: scale(0); opacity: 0; }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    50% {
+      transform: scale(1.1);
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 
   .animate-ball-pop {
@@ -305,8 +391,15 @@
 
   /* Fade in animation */
   @keyframes fade-in-up {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .animate-fade-in-up {
@@ -315,8 +408,15 @@
 
   /* Pulse glow for jackpot */
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
-    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.5); }
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+    }
+
+    50% {
+      box-shadow: 0 0 40px hsl(var(--primary) / 0.5);
+    }
   }
 
   .animate-pulse-glow {
