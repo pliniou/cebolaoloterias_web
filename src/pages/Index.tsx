@@ -1,11 +1,26 @@
 import { Layout } from "@/components/layout/Layout";
-import { LotteryCard } from "@/components/lottery/LotteryCard";
-import { lotteries } from "@/lib/lotteries";
-import { Sparkles, TrendingUp, Clock, Gift } from "lucide-react";
+import { RealLotteryCard } from "@/components/lottery/RealLotteryCard";
+import { Sparkles, TrendingUp, Clock, Gift, Loader2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router-dom";
+import { useLotteries } from "@/features/lotteries/hooks/useLotteryData";
+import { lotteries as staticLotteries } from "@/lib/lotteries"; // Fallback para ícones
 
 const Index = () => {
-  // Featured lotteries for hero section
+  // Buscar loterias reais da API
+  const { data: apiLotteries, isLoading, error } = useLotteries();
+
+  // Merge API data com dados estáticos (para ícones)
+  const lotteries = apiLotteries?.map(apiLottery => {
+    const staticData = staticLotteries.find(l => l.slug === apiLottery.slug);
+    return {
+      ...apiLottery,
+      icon: staticData?.icon,
+      color: staticData?.color || apiLottery.slug,
+    };
+  }) || [];
+
+  // Featured lotteries (primeiras 3)
   const featuredLotteries = lotteries.slice(0, 3);
 
   return (
@@ -22,7 +37,7 @@ const Index = () => {
               </span>
             </div>
             <h1 className="text-3xl lg:text-5xl font-black font-serif text-primary-foreground mb-3 tracking-tight">
-              Cebolão Loterias
+              Loterias CAIXA
             </h1>
             <p className="text-lg text-primary-foreground/90 max-w-xl">
               Acompanhe os resultados de todas as loterias da Caixa em um só lugar.
@@ -33,7 +48,9 @@ const Index = () => {
             <div className="flex flex-wrap gap-4 mt-6">
               <div className="flex items-center gap-2 bg-primary-foreground/10 rounded-lg px-4 py-2">
                 <TrendingUp className="h-4 w-4 text-primary-foreground" />
-                <span className="text-sm text-primary-foreground">11 Loterias</span>
+                <span className="text-sm text-primary-foreground">
+                  {lotteries.length} Loterias
+                </span>
               </div>
               <div className="flex items-center gap-2 bg-primary-foreground/10 rounded-lg px-4 py-2">
                 <Clock className="h-4 w-4 text-primary-foreground" />
@@ -47,56 +64,96 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Featured Lotteries */}
+        {/* Latest Results */}
         <section>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold">Últimos Resultados</h2>
-            <span className="text-sm text-muted-foreground">Atualizado há 5 min</span>
+            {!isLoading && !error && (
+              <span className="text-sm text-muted-foreground">Dados em tempo real</span>
+            )}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {featuredLotteries.map((lottery) => (
-              <LotteryCard key={lottery.id} lottery={lottery} />
-            ))}
-          </div>
+
+          {/* Loading State */}
+          {isLoading && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3].map((i) => (
+                <Card key={i} className="overflow-hidden">
+                  <CardContent className="p-8 flex items-center justify-center">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && (
+            <Card className="border-destructive">
+              <CardContent className="p-8 text-center">
+                <p className="text-destructive mb-2">Erro ao carregar loterias</p>
+                <p className="text-sm text-muted-foreground">
+                  Verifique se o backend está rodando em http://localhost:8000
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Success State - Real Data */}
+          {!isLoading && !error && featuredLotteries.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {featuredLotteries.map((lottery) => (
+                <RealLotteryCard key={lottery.id} slug={lottery.slug} />
+              ))}
+            </div>
+          )}
         </section>
 
         {/* All Lotteries Grid */}
         <section>
           <h2 className="text-xl font-bold mb-4">Todas as Loterias</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
-            {lotteries.map((lottery) => {
-              const Icon = lottery.icon;
-              return (
-                <a
-                  key={lottery.id}
-                  href={`/${lottery.slug}`}
-                  className="group"
-                >
-                  <Card className="hover-lift border-0 shadow-flat hover:shadow-flat-md transition-all duration-300">
-                    <CardContent className="p-4 flex flex-col items-center text-center">
-                      <div
-                        className="w-14 h-14 rounded-xl flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-110"
-                        style={{
-                          backgroundColor: `hsl(var(--${lottery.color}))`,
-                        }}
-                      >
-                        <Icon className="h-7 w-7 text-primary-foreground" />
-                      </div>
-                      <h3 className="font-semibold text-sm">{lottery.name}</h3>
-                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                        {lottery.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </a>
-              );
-            })}
-          </div>
+
+          {isLoading && (
+            <div className="text-center py-8">
+              <Loader2 className="h-8 w-8 animate-spin  text-primary mx-auto" />
+            </div>
+          )}
+
+          {!isLoading && !error && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
+              {lotteries.map((lottery) => {
+                const Icon = lottery.icon;
+                return (
+                  <Link
+                    key={lottery.id}
+                    to={`/${lottery.slug}`}
+                    className="group"
+                  >
+                    <Card className="hover-lift border-0 shadow-flat hover:shadow-flat-md transition-all duration-300">
+                      <CardContent className="p-4 flex flex-col items-center text-center">
+                        <div
+                          className="w-14 h-14 rounded-xl flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-110"
+                          style={{
+                            backgroundColor: `hsl(var(--${lottery.color}))`,
+                          }}
+                        >
+                          {Icon && <Icon className="h-7 w-7 text-primary-foreground" />}
+                        </div>
+                        <h3 className="font-semibold text-sm">{lottery.name}</h3>
+                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                          {lottery.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </section>
 
         {/* Info Cards */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <a href="/meus-jogos" className="block group">
+          <Link to="/meus-jogos" className="block group">
             <Card className="border-2 hover:border-primary transition-colors cursor-pointer h-full">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -108,9 +165,9 @@ const Index = () => {
                 </p>
               </CardContent>
             </Card>
-          </a>
+          </Link>
 
-          <a href="/conferencia" className="block group">
+          <Link to="/conferencia" className="block group">
             <Card className="border-2 hover:border-green-500 transition-colors cursor-pointer h-full">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -122,7 +179,7 @@ const Index = () => {
                 </p>
               </CardContent>
             </Card>
-          </a>
+          </Link>
         </section>
       </div>
     </Layout>

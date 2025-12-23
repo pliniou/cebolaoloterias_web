@@ -159,6 +159,80 @@ class Draw(models.Model):
     def __str__(self):
         return f"{self.lottery.name} - Concurso {self.number}"
 
+    def clean(self):
+        """
+        Valida consistência dos números sorteados conforme regras da loteria.
+        Implementa validações do DS CAIXA para garantir qualidade de dados.
+        """
+        from django.core.exceptions import ValidationError
+
+        super().clean()
+
+        # Validação 1: numbers deve ser uma lista
+        if not isinstance(self.numbers, list):
+            raise ValidationError({
+                'numbers': 'Números devem ser uma lista.'
+            })
+
+        # Validação 2: Quantidade de números correto
+        expected_count = self.lottery.numbers_count
+        if len(self.numbers) != expected_count:
+            raise ValidationError({
+                'numbers': f'{self.lottery.name} requer exatamente {expected_count} números, '
+                          f'mas foram fornecidos {len(self.numbers)}.'
+            })
+
+        # Validação 3: Todos os números devem ser inteiros
+        for num in self.numbers:
+            if not isinstance(num, int):
+                raise ValidationError({
+                    'numbers': f'Número inválido: {num}. Todos os números devem ser inteiros.'
+                })
+
+        # Validação 4: Números dentro do range permitido
+        min_num = self.lottery.min_number
+        max_num = self.lottery.max_number
+        
+        for num in self.numbers:
+            if num < min_num or num > max_num:
+                raise ValidationError({
+                    'numbers': f'Número {num} fora do intervalo permitido '
+                              f'[{min_num}-{max_num}] para {self.lottery.name}.'
+                })
+
+        # Validação 5: Sem números duplicados
+        if len(set(self.numbers)) != len(self.numbers):
+            duplicates = [num for num in self.numbers if self.numbers.count(num) > 1]
+            raise ValidationError({
+                'numbers': f'Números duplicados não são permitidos. '
+                          f'Duplicatas encontradas: {set(duplicates)}'
+            })
+
+        # Validação 6: Validar numbers_draw_order se fornecido
+        if self.numbers_draw_order is not None:
+            if not isinstance(self.numbers_draw_order, list):
+                raise ValidationError({
+                    'numbers_draw_order': 'Deve ser uma lista.'
+                })
+            
+            if len(self.numbers_draw_order) != expected_count:
+                raise ValidationError({
+                    'numbers_draw_order': f'Deve conter exatamente {expected_count} números.'
+                })
+            
+            # Deve conter os mesmos números (só ordem diferente)
+            if set(self.numbers_draw_order) != set(self.numbers):
+                raise ValidationError({
+                    'numbers_draw_order': 'Deve conter os mesmos números que o campo numbers.'
+                })
+
+    def save(self, *args, **kwargs):
+        """
+        Override save para garantir validação antes de salvar.
+        """
+        self.full_clean()
+        super().save(*args, **kwargs)
+
 
 class PrizeTier(models.Model):
     """

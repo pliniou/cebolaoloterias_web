@@ -9,8 +9,8 @@
 
 @layer base {
   :root {
-    /* Light Theme - Clean & Professional */
-    --background: 210 20% 98%;
+    /* Light Theme - CAIXA Official Colors */
+    --background: 0 0% 98%;
     --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
@@ -19,62 +19,69 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 142 71% 45%;
+    /* PALETA FIXA CAIXA - Cores Estruturais */
+    --azul-caixa: 211 100% 35%;           /* C100 M60 Y0 K0 | #0066B3 | R0 G102 B179 | Pantone 287C */
+    --laranja-caixa: 27 95% 54%;          /* C0 M50 Y100 K0 | #F7941E | R247 G148 B30 | Pantone 151C */
+    --branco-caixa: 0 0% 100%;            /* C0 M0 Y0 K0 | #FFFFFF | R255 G255 B255 */
+    --cinza-caixa: 0 0% 87%;              /* C0 M0 Y0 K15 | #DCDCDE | R220 G221 B222 */
+
+    /* Aplicação DS CAIXA */
+    --primary: 211 100% 35%;              /* Azul CAIXA */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
+    --secondary: 0 0% 96%;
     --secondary-foreground: 222 47% 11%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 47%;
 
-    --accent: 45 93% 47%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 27 95% 54%;                 /* Laranja CAIXA */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 142 71% 45%;
+    --border: 0 0% 91%;
+    --input: 0 0% 91%;
+    --ring: 211 100% 35%;                 /* Azul CAIXA */
 
     --radius: 0.75rem;
 
-    /* Lottery Colors - Official Caixa Palette with Light/Dark Scales */
-    /* Mega-Sena - Verde Trevosa */
-    --megasena-light: 158 64% 52%;
-    --megasena: 158 64% 42%;
-    --megasena-dark: 158 64% 32%;
+    /* PALETA DE JOGOS - Cores Oficiais CAIXA por Loteria */
+    /* Mega-Sena - Verde */
+    --megasena-light: 142 71% 50%;
+    --megasena: 142 71% 40%;              /* Verde oficial */
+    --megasena-dark: 142 71% 30%;
 
-    /* Quina - Roxo */
-    --quina-light: 261 63% 60%;
-    --quina: 261 63% 50%;
-    --quina-dark: 261 63% 40%;
+    /* Quina - Vinho */
+    --quina-light: 340 60% 45%;
+    --quina: 340 60% 35%;                 /* Vinho oficial */
+    --quina-dark: 340 60% 25%;
 
-    /* Lotofácil - Rosa/Magenta */
-    --lotofacil-light: 330 85% 60%;
-    --lotofacil: 330 85% 50%;
-    --lotofacil-dark: 330 85% 40%;
+    /* Lotofácil - Vermelho */
+    --lotofacil-light: 0 80% 60%;
+    --lotofacil: 0 80% 50%;               /* Vermelho oficial */
+    --lotofacil-dark: 0 80% 40%;
 
-    /* Lotomania - Laranja */
-    --lotomania-light: 28 90% 55%;
-    --lotomania: 28 90% 45%;
-    --lotomania-dark: 28 90% 35%;
+    /* Lotomania - Roxo */
+    --lotomania-light: 270 50% 55%;
+    --lotomania: 270 50% 45%;             /* Roxo oficial */
+    --lotomania-dark: 270 50% 35%;
 
     /* Dupla Sena - Vermelho */
     --duplasena-light: 344 75% 55%;
     --duplasena: 344 75% 45%;
     --duplasena-dark: 344 75% 35%;
 
-    /* Timemania - Verde Claro */
-    --timemania-light: 145 58% 55%;
-    --timemania: 145 58% 45%;
-    --timemania-dark: 145 58% 35%;
+    /* Timemania - Amarelo */
+    --timemania-light: 48 100% 60%;
+    --timemania: 48 100% 50%;             /* Amarelo oficial */
+    --timemania-dark: 48 100% 40%;
 
-    /* Dia de Sorte - Marrom/Laranja */
-    --diadesorte-light: 35 70% 50%;
-    --diadesorte: 35 70% 40%;
-    --diadesorte-dark: 35 70% 30%;
+    /* Dia de Sorte - Laranja */
+    --diadesorte-light: 27 95% 64%;
+    --diadesorte: 27 95% 54%;             /* Laranja CAIXA */
+    --diadesorte-dark: 27 95% 44%;
 
     /* Super Sete - Azul */
     --supersete-light: 199 85% 52%;
@@ -96,15 +103,23 @@
     --maismilionaria: 220 80% 40%;
     --maismilionaria-dark: 220 80% 30%;
 
-    /* Sidebar */
+    /* PALETA FLEXÍVEL - Gradientes Turquesa CAIXA */
+    --turquesa-base: 174 84% 45%;
+    --turquesa-limao: 72 100% 50%;        /* Inverno */
+    --turquesa-tangerina: 25 100% 60%;    /* Verão */
+    --turquesa-uva: 270 60% 50%;          /* Primavera */
+    --turquesa-goiaba: 345 85% 55%;       /* Outono */
+    --turquesa-ceu: 200 100% 60%;         /* Água */
+
+    /* Sidebar - CAIXA Colors */
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 222 47% 11%;
-    --sidebar-primary: 142 71% 45%;
+    --sidebar-primary: 211 100% 35%;      /* Azul CAIXA */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent: 0 0% 96%;
     --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 142 71% 45%;
+    --sidebar-border: 0 0% 91%;
+    --sidebar-ring: 211 100% 35%;         /* Azul CAIXA */
 
     /* Charts */
     --chart-1: 142 71% 45%;
@@ -160,7 +175,8 @@
     --popover: 222 47% 9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 142 71% 45%;
+    /* Dark theme mantém Azul CAIXA mas ajusta saturação */
+    --primary: 211 90% 45%;               /* Azul CAIXA ajustado para dark */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 217 33% 17%;
@@ -169,7 +185,7 @@
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 45 93% 47%;
+    --accent: 27 90% 60%;                 /* Laranja CAIXA ajustado para dark */
     --accent-foreground: 222 47% 11%;
 
     --destructive: 0 63% 31%;
@@ -177,17 +193,17 @@
 
     --border: 217 33% 17%;
     --input: 217 33% 17%;
-    --ring: 142 71% 45%;
+    --ring: 211 90% 45%;                  /* Azul CAIXA */
 
-    /* Sidebar */
+    /* Sidebar - Dark Theme */
     --sidebar-background: 222 47% 8%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 142 71% 45%;
+    --sidebar-primary: 211 90% 45%;       /* Azul CAIXA dark */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 217 33% 17%;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 217 33% 17%;
-    --sidebar-ring: 142 71% 45%;
+    --sidebar-ring: 211 90% 45%;          /* Azul CAIXA dark */
 
     /* Shadows for dark */
     --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.3);

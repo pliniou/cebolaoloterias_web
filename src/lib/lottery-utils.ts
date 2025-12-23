@@ -1,46 +1,40 @@
 /**
- * Centralized utility functions for Cebolão Loterias
+ * Utility functions for lottery data formatting
  */
 
 /**
- * Generates a set of unique random numbers for a lottery draw
- */
-export function generateRandomNumbers(count: number, min: number, max: number): number[] {
-    const numbers: number[] = [];
-    const rangeSize = max - min + 1;
-    const actualCount = Math.min(count, rangeSize);
-
-    while (numbers.length < actualCount) {
-        const num = Math.floor(Math.random() * rangeSize) + min;
-        if (!numbers.includes(num)) {
-            numbers.push(num);
-        }
-    }
-    return numbers.sort((a, b) => a - b);
-}
-
-/**
- * Formats a currency value to BRL
+ * Formata valor em reais
  */
 export function formatCurrency(value: number): string {
-    return value.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
+    return value.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
     });
 }
 
 /**
- * Formats an ISO date string to pt-BR format
+ * Formata data ISO para pt-BR
  */
 export function formatDate(dateString: string): string {
-    if (!dateString) return "";
-    try {
-        return new Date(dateString).toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-        });
-    } catch (e) {
-        return dateString;
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    });
+}
+
+/**
+ * Gera números aleatórios para preview
+ * @deprecated Use dados reais da API
+ */
+export function generateRandomNumbers(count: number, min: number, max: number): number[] {
+    const numbers = new Set<number>();
+
+    while (numbers.size < count) {
+        const num = Math.floor(Math.random() * (max - min + 1)) + min;
+        numbers.add(num);
     }
+
+    return Array.from(numbers).sort((a, b) => a - b);
 }

@@ -20,6 +20,13 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        
+        // CAIXA Fixed Palette
+        "azul-caixa": "hsl(var(--azul-caixa))",
+        "laranja-caixa": "hsl(var(--laranja-caixa))",
+        "branco-caixa": "hsl(var(--branco-caixa))",
+        "cinza-caixa": "hsl(var(--cinza-caixa))",
+        
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -58,7 +65,18 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Lottery colors with light/dark scales
+        
+        // CAIXA Flexible Palette (Turquoise Gradients)
+        turquesa: {
+          DEFAULT: "hsl(var(--turquesa-base))",
+          limao: "hsl(var(--turquesa-limao))",
+          tangerina: "hsl(var(--turquesa-tangerina))",
+          uva: "hsl(var(--turquesa-uva))",
+          goiaba: "hsl(var(--turquesa-goiaba))",
+          ceu: "hsl(var(--turquesa-ceu))",
+        },
+        
+        // Lottery colors with light/dark scales (Official CAIXA)
         megasena: {
           light: "hsl(var(--megasena-light))",
           DEFAULT: "hsl(var(--megasena))",
