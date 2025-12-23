@@ -76,7 +76,7 @@ class TestGeneratorAPI:
             "lottery": lottery.id,
             "config": {"min_sum": 100, "max_sum": 200}
         }, format="json")
-        
+
         assert response.status_code == status.HTTP_201_CREATED
         assert Preset.objects.count() == 1
         assert Preset.objects.first().config["min_sum"] == 100
@@ -90,21 +90,21 @@ class TestGeneratorAPI:
             name="Test",
             config={"min_even": 3, "max_even": 3} # Strictly 3 evens
         )
-        
+
         response = client.post(f"/api/generator/presets/{preset.id}/run/", {
             "count": 5
         }, format="json")
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert len(data["result"]) == 5
-        
+
         # Check generated games
         for game in data["result"]:
             numbers = game["numbers"]
             evens = sum(1 for n in numbers if n % 2 == 0)
             assert evens == 3
-            
+
         assert GeneratorRun.objects.count() == 1
 
     def test_adhoc_run(self, client, lottery):
@@ -117,11 +117,11 @@ class TestGeneratorAPI:
                 "numbers_count": 6
             }
         }, format="json")
-        
+
         assert response.status_code == status.HTTP_201_CREATED
         data = response.json()
         results = data["result"]
-        
+
         assert len(results) == 2
         for game in results:
             assert {1, 2, 3}.issubset(set(game["numbers"]))
@@ -134,11 +134,11 @@ class TestGeneratorAPI:
             "count": 1,
             "config": {"max_sum": 5} # Min sum for Mega is 1+2+3+4+5+6 = 21
         }, format="json")
-        
+
         # The generator will likely timeout/exhaust attempts and return fewer or 0 games
         # Or if validation happens before loop, it might return empty list
         # Current implementation loops MAX_ATTEMPTS then returns whatever it got
-        
+
         assert response.status_code == status.HTTP_201_CREATED
         data = response.json()
         # Should be empty or successful if randomness somehow found a bug (unlikely)

@@ -13,7 +13,7 @@ from apps.lotteries.models import Lottery
 class Preset(models.Model):
     """
     Configuration preset for game generation.
-    
+
     Stores a set of constraints/filters (e.g., sum range, even count)
     to be reused for generating games.
     """
@@ -58,7 +58,7 @@ class Preset(models.Model):
 class GeneratorRun(models.Model):
     """
     Record of a generation run.
-    
+
     Stores the output of a game generation request.
     """
 

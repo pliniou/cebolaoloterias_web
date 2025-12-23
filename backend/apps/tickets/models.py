@@ -13,7 +13,7 @@ from apps.lotteries.models import Draw, Lottery, PrizeTier
 class UserTicket(models.Model):
     """
     Represents a user's ticket containing multiple bet lines.
-    
+
     A ticket is a collection of bet lines for a specific lottery.
     """
 
@@ -65,7 +65,7 @@ class UserTicket(models.Model):
 class UserBetLine(models.Model):
     """
     Represents a single bet line within a ticket.
-    
+
     Each line contains a set of numbers the user has bet on.
     """
 
@@ -125,7 +125,7 @@ class UserBetLine(models.Model):
 class TicketCheckResult(models.Model):
     """
     Result of checking a ticket against a specific draw.
-    
+
     Stores the overall result of the check including total prize won.
     """
 
@@ -182,7 +182,7 @@ class TicketCheckResult(models.Model):
 class LineCheckResult(models.Model):
     """
     Result of checking a single bet line against a draw.
-    
+
     Stores the hits and prize for each individual line.
     """
 

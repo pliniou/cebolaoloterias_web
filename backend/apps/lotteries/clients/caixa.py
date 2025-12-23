@@ -41,7 +41,7 @@ class DrawResult:
 class CaixaLotteryClient:
     """
     HTTP client for fetching lottery results from CAIXA API.
-    
+
     Usage:
         client = CaixaLotteryClient()
         result = client.get_latest_result("megasena")
@@ -54,7 +54,7 @@ class CaixaLotteryClient:
     def __init__(self):
         """Initialize the client with retry configuration."""
         self.session = requests.Session()
-        
+
         # Configure retries
         retry_strategy = Retry(
             total=3,
@@ -64,7 +64,7 @@ class CaixaLotteryClient:
         adapter = HTTPAdapter(max_retries=retry_strategy)
         self.session.mount("https://", adapter)
         self.session.mount("http://", adapter)
-        
+
         # Set headers
         self.session.headers.update({
             "Accept": "application/json",
@@ -74,13 +74,13 @@ class CaixaLotteryClient:
     def get_latest_result(self, lottery_slug: str) -> DrawResult:
         """
         Fetch the latest draw result for a lottery.
-        
+
         Args:
             lottery_slug: API identifier for the lottery (e.g., "megasena")
-            
+
         Returns:
             Parsed DrawResult object
-            
+
         Raises:
             requests.RequestException: If the API request fails
             ValueError: If the response cannot be parsed
@@ -91,11 +91,11 @@ class CaixaLotteryClient:
     def get_result_by_number(self, lottery_slug: str, number: int) -> DrawResult:
         """
         Fetch a specific draw result by contest number.
-        
+
         Args:
             lottery_slug: API identifier for the lottery
             number: Contest number
-            
+
         Returns:
             Parsed DrawResult object
         """
@@ -105,20 +105,20 @@ class CaixaLotteryClient:
     def _fetch_and_parse(self, url: str, lottery_slug: str) -> DrawResult:
         """Fetch data from URL and parse into DrawResult."""
         logger.info(f"Fetching lottery data from: {url}")
-        
+
         response = self.session.get(url, timeout=self.TIMEOUT)
         response.raise_for_status()
-        
+
         data = response.json()
         logger.debug(f"Received data for contest {data.get('numero')}")
-        
+
         return self._parse_response(data, lottery_slug)
 
     def _parse_response(self, data: dict[str, Any], lottery_slug: str) -> DrawResult:
         """Parse CAIXA API response into DrawResult."""
         # Parse numbers
         numbers = self._parse_numbers(data.get("listaDezenas", []))
-        
+
         # Special handling for Federal
         if lottery_slug == "federal" and not numbers:
             # Federal doesn't have "listaDezenas", we extract from prize tiers (bilhetes)
@@ -138,25 +138,25 @@ class CaixaLotteryClient:
             # Sort or keep order? Federal prizes have hierarchy, but Draw.numbers usually expects sorted
             # for matching. However, for Federal, matching rules are specific.
             # We'll store them as is (usually 5 numbers).
-        
+
         numbers_draw_order = self._parse_numbers(
             data.get("dezenasSorteadasOrdemSorteio", [])
         )
-        
+
         # Special handling for Super Sete (cols) is usually automatic via listaDezenas
-        
+
         # Parse dates
         draw_date = self._parse_date(data.get("dataApuracao", ""))
         next_draw_date = self._parse_date(data.get("dataProximoConcurso", ""))
-        
+
         # Parse prize tiers
         prize_tiers = self._parse_prize_tiers(data.get("listaRateioPremio", []))
-        
+
         # Clean location string (may contain null characters)
         city_state = data.get("nomeMunicipioUFSorteio", "")
         if city_state:
             city_state = city_state.replace("\x00", "").strip()
-            
+
         # Create result object
         return DrawResult(
             number=data.get("numero", 0),

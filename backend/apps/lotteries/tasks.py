@@ -20,10 +20,10 @@ logger = logging.getLogger(__name__)
 def sync_lottery_results(self, lottery_slug: str = "megasena") -> dict:
     """
     Synchronize the latest lottery results from CAIXA API.
-    
+
     Args:
         lottery_slug: Slug of the lottery to sync (default: megasena)
-        
+
     Returns:
         Dict with sync status and details
     """
@@ -32,15 +32,15 @@ def sync_lottery_results(self, lottery_slug: str = "megasena") -> dict:
     except Lottery.DoesNotExist:
         logger.error(f"Lottery not found: {lottery_slug}")
         return {"status": "error", "message": f"Lottery not found: {lottery_slug}"}
-    
+
     client = CaixaLotteryClient()
-    
+
     try:
         result = client.get_latest_result(lottery.api_identifier)
     except Exception as exc:
         logger.error(f"Failed to fetch lottery results: {exc}")
         raise self.retry(exc=exc)
-    
+
     # Check if draw already exists
     if Draw.objects.filter(lottery=lottery, number=result.number).exists():
         logger.info(f"Draw {result.number} already exists for {lottery.name}")
@@ -49,7 +49,7 @@ def sync_lottery_results(self, lottery_slug: str = "megasena") -> dict:
             "message": f"Draw {result.number} already exists",
             "draw_number": result.number,
         }
-    
+
     # Create draw and prize tiers in a transaction
     with transaction.atomic():
         draw = Draw.objects.create(
@@ -68,12 +68,12 @@ def sync_lottery_results(self, lottery_slug: str = "megasena") -> dict:
             next_draw_date=result.next_draw_date,
             raw_data=result.raw_data,
         )
-        
+
         # Create prize tiers
         for tier_data in result.prize_tiers:
             # Extract matches from description (e.g., "6 acertos" -> 6)
             matches = _extract_matches(tier_data["description"])
-            
+
             PrizeTier.objects.create(
                 draw=draw,
                 tier=tier_data["tier"],
@@ -82,9 +82,9 @@ def sync_lottery_results(self, lottery_slug: str = "megasena") -> dict:
                 winners_count=tier_data["winners_count"],
                 prize_value=tier_data["prize_value"],
             )
-        
+
         logger.info(f"Created draw {draw.number} for {lottery.name}")
-    
+
     return {
         "status": "created",
         "message": f"Created draw {draw.number}",
@@ -97,7 +97,7 @@ def sync_lottery_results(self, lottery_slug: str = "megasena") -> dict:
 def sync_all_active_lotteries() -> dict:
     """
     Synchronize results for all active lotteries.
-    
+
     Returns:
         Dict with results for each lottery
     """
@@ -109,7 +109,7 @@ def sync_all_active_lotteries() -> dict:
         except Exception as exc:
             logger.error(f"Failed to sync {lottery.slug}: {exc}")
             results[lottery.slug] = {"status": "error", "message": str(exc)}
-    
+
     return results
 
 
@@ -117,11 +117,11 @@ def sync_all_active_lotteries() -> dict:
 def sync_draw_by_number(self, lottery_slug: str, number: int) -> dict:
     """
     Synchronize a specific draw by number.
-    
+
     Args:
         lottery_slug: Slug of the lottery
         number: Contest number to sync
-        
+
     Returns:
         Dict with sync status
     """
@@ -129,19 +129,19 @@ def sync_draw_by_number(self, lottery_slug: str, number: int) -> dict:
         lottery = Lottery.objects.get(slug=lottery_slug, is_active=True)
     except Lottery.DoesNotExist:
         return {"status": "error", "message": f"Lottery not found: {lottery_slug}"}
-    
+
     # Check if already exists
     if Draw.objects.filter(lottery=lottery, number=number).exists():
         return {"status": "skipped", "message": f"Draw {number} already exists"}
-    
+
     client = CaixaLotteryClient()
-    
+
     try:
         result = client.get_result_by_number(lottery.api_identifier, number)
     except Exception as exc:
         logger.error(f"Failed to fetch draw {number}: {exc}")
         raise self.retry(exc=exc)
-    
+
     with transaction.atomic():
         draw = Draw.objects.create(
             lottery=lottery,
@@ -159,7 +159,7 @@ def sync_draw_by_number(self, lottery_slug: str, number: int) -> dict:
             next_draw_date=result.next_draw_date,
             raw_data=result.raw_data,
         )
-        
+
         for tier_data in result.prize_tiers:
             matches = _extract_matches(tier_data["description"])
             PrizeTier.objects.create(
@@ -170,7 +170,7 @@ def sync_draw_by_number(self, lottery_slug: str, number: int) -> dict:
                 winners_count=tier_data["winners_count"],
                 prize_value=tier_data["prize_value"],
             )
-    
+
     return {"status": "created", "draw_number": number, "draw_id": draw.id}
 
 

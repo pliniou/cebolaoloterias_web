@@ -10,7 +10,7 @@ from django.db import models
 class Lottery(models.Model):
     """
     Represents a lottery type (e.g., Mega-Sena, Quina, Lotofácil).
-    
+
     Each lottery has its own rules for number selection and prize tiers.
     """
 
@@ -70,7 +70,7 @@ class Lottery(models.Model):
 class Draw(models.Model):
     """
     Represents a single draw/contest of a lottery.
-    
+
     Contains the drawn numbers, date, and accumulated values.
     """
 
@@ -163,7 +163,7 @@ class Draw(models.Model):
 class PrizeTier(models.Model):
     """
     Represents a prize tier for a specific draw.
-    
+
     Each draw can have multiple prize tiers (e.g., 6 matches, 5 matches, 4 matches).
     """
 

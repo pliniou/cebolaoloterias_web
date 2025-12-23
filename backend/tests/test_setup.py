@@ -3,7 +3,6 @@ Basic tests to verify the Django project setup.
 """
 
 import pytest
-from django.urls import reverse
 
 
 @pytest.mark.django_db

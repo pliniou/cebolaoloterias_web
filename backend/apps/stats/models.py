@@ -12,7 +12,7 @@ from apps.lotteries.models import Draw
 class DrawStatistics(models.Model):
     """
     Pre-calculated statistics for a specific draw.
-    
+
     Stores metrics like sum, even/odd count, prime numbers, etc.
     to avoid re-calculation on every request.
     """
@@ -23,7 +23,7 @@ class DrawStatistics(models.Model):
         related_name="stats",
         verbose_name="Sorteio",
     )
-    
+
     # Basic Metrics
     sum_value = models.IntegerField(
         verbose_name="Soma",
@@ -41,7 +41,7 @@ class DrawStatistics(models.Model):
         verbose_name="Amplitude",
         help_text="Diferença entre o maior e o menor número",
     )
-    
+
     # Advanced Metrics
     prime_count = models.PositiveSmallIntegerField(
         verbose_name="Primos",
@@ -56,7 +56,7 @@ class DrawStatistics(models.Model):
         verbose_name="Repetidos",
         help_text="Quantidade de números repetidos do concurso anterior",
     )
-    
+
     # Metadata
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

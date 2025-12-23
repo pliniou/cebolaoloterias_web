@@ -26,7 +26,7 @@ api_urlpatterns = [
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "docs/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
+        SpectacularSwaggerView.as_view(url_name="api:schema"),
         name="swagger-ui",
     ),
     # App URLs
@@ -36,7 +36,10 @@ api_urlpatterns = [
     path("tickets/", include("apps.tickets.urls")),
 ]
 
+from django.views.generic import RedirectView
+
 urlpatterns = [
+    path("", RedirectView.as_view(url="/api/docs/", permanent=False)),
     path("admin/", admin.site.urls),
     path("api/", include((api_urlpatterns, "api"))),
 ]

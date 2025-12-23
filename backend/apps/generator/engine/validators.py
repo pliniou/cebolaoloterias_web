@@ -108,7 +108,7 @@ class ExclusionValidator(BaseValidator):
         return True
 
     def get_description(self) -> str:
-        return f"Excluir: {sorted(list(self.excluded_set))}"
+        return f"Excluir: {sorted(self.excluded_set)}"
 
 
 class FixNumbersValidator(BaseValidator):
@@ -122,4 +122,4 @@ class FixNumbersValidator(BaseValidator):
         return self.fixed_set.issubset(set(numbers))
 
     def get_description(self) -> str:
-        return f"Fixar: {sorted(list(self.fixed_set))}"
+        return f"Fixar: {sorted(self.fixed_set)}"

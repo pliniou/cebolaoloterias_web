@@ -4,15 +4,12 @@ Stats manager service.
 Manages aggregation and caching of lottery statistics.
 """
 
-import json
 from collections import Counter
 from datetime import date
-from decimal import Decimal
 
 from django.core.cache import cache
 
-from apps.lotteries.models import Draw, Lottery
-from apps.stats.models import DrawStatistics
+from apps.lotteries.models import Draw
 
 
 class StatsManager:
@@ -29,19 +26,19 @@ class StatsManager:
     ) -> dict:
         """
         Get aggregated statistics for a lottery.
-        
+
         Args:
             lottery_slug: Lottery identifier
             window: Number of last draws to consider
             start_date: Filter start date
             end_date: Filter end date
-            
+
         Returns:
             Dict containing frequency maps and metric averages
         """
         # Generate cache key
         cache_key = self._generate_cache_key(lottery_slug, window, start_date, end_date)
-        
+
         # Try to get from cache
         cached_data = cache.get(cache_key)
         if cached_data:
@@ -54,10 +51,10 @@ class StatsManager:
 
         # Calculate aggregations
         stats = self._calculate_aggregations(queryset)
-        
+
         # Cache result
         cache.set(cache_key, stats, self.CACHE_TTL)
-        
+
         return stats
 
     def invalidate_cache(self, lottery_slug: str):
@@ -81,17 +78,17 @@ class StatsManager:
     def _filter_draws(self, slug: str, window: int | None, start: date | None, end: date | None):
         """Filter draws based on criteria."""
         qs = Draw.objects.filter(lottery__slug=slug, lottery__is_active=True).select_related("stats")
-        
+
         if start:
             qs = qs.filter(draw_date__gte=start)
         if end:
             qs = qs.filter(draw_date__lte=end)
-            
+
         qs = qs.order_by("-number")
-        
+
         if window:
             qs = qs[:window]
-            
+
         return qs
 
     def _calculate_aggregations(self, queryset) -> dict:
@@ -99,13 +96,13 @@ class StatsManager:
         # Ensure we have the list in memory
         draws = list(queryset)
         total_draws = len(draws)
-        
+
         if total_draws == 0:
             return {}
 
         # Frequency counters
         number_frequency = Counter()
-        
+
         # Metric accumulators
         total_sum = 0
         total_range = 0
@@ -119,7 +116,7 @@ class StatsManager:
         for draw in draws:
             # Numbers frequency
             number_frequency.update(draw.numbers)
-            
+
             # Metrics
             if hasattr(draw, "stats"):
                 stats = draw.stats

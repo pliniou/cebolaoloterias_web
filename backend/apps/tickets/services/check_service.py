@@ -30,7 +30,7 @@ class LineResult:
 class TicketCheckService:
     """
     Service for checking user tickets against lottery draws.
-    
+
     Usage:
         service = TicketCheckService()
         result = service.check_ticket(ticket, draw)
@@ -40,14 +40,14 @@ class TicketCheckService:
     def check_ticket(self, ticket: UserTicket, draw: Draw) -> TicketCheckResult:
         """
         Check a ticket against a specific draw.
-        
+
         Args:
             ticket: The user ticket to check
             draw: The draw to check against
-            
+
         Returns:
             TicketCheckResult with all line results
-            
+
         Raises:
             ValueError: If ticket and draw are for different lotteries
             ValueError: If the ticket has already been checked against this draw
@@ -87,13 +87,13 @@ class TicketCheckService:
     def check_ticket_latest(self, ticket: UserTicket) -> TicketCheckResult:
         """
         Check a ticket against the latest draw of its lottery.
-        
+
         Args:
             ticket: The user ticket to check
-            
+
         Returns:
             TicketCheckResult
-            
+
         Raises:
             ValueError: If no draws exist for the lottery
         """
@@ -108,14 +108,14 @@ class TicketCheckService:
     ) -> TicketCheckResult:
         """
         Check a ticket against a specific draw number.
-        
+
         Args:
             ticket: The user ticket to check
             draw_number: The draw/contest number
-            
+
         Returns:
             TicketCheckResult
-            
+
         Raises:
             ValueError: If draw not found
         """
@@ -124,7 +124,7 @@ class TicketCheckService:
         except Draw.DoesNotExist:
             raise ValueError(
                 f"Draw {draw_number} not found for {ticket.lottery.name}"
-            )
+            ) from None
 
         return self.check_ticket(ticket, draw)
 
@@ -136,12 +136,12 @@ class TicketCheckService:
     ) -> dict:
         """
         Check a single line against draw numbers.
-        
+
         Args:
             bet_numbers: Numbers the user bet on
             draw_numbers: Numbers drawn in the lottery
             prize_tiers: Map of hits count to prize tier
-            
+
         Returns:
             Dict with hits, hit_numbers, prize_tier, prize_value
         """
@@ -165,10 +165,10 @@ class TicketCheckService:
     def _build_prize_tier_map(self, draw: Draw) -> dict[int, PrizeTier]:
         """
         Build a map of hits count to prize tier.
-        
+
         Args:
             draw: The draw to get prize tiers from
-            
+
         Returns:
             Dict mapping number of hits to PrizeTier
         """
@@ -187,12 +187,12 @@ class TicketCheckService:
     ) -> TicketCheckResult:
         """
         Persist check results to database.
-        
+
         Args:
             ticket: The checked ticket
             draw: The draw checked against
             line_results: Results for each line
-            
+
         Returns:
             Created TicketCheckResult
         """

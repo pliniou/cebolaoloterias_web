@@ -4,8 +4,8 @@ DRF Serializers for generator app.
 
 from rest_framework import serializers
 
-from apps.lotteries.serializers import LotteryMinimalSerializer
 from apps.generator.models import GeneratorRun, Preset
+from apps.lotteries.serializers import LotteryMinimalSerializer
 
 
 class PresetSerializer(serializers.ModelSerializer):
@@ -35,7 +35,7 @@ class PresetSerializer(serializers.ModelSerializer):
 
 class GeneratorRunSerializer(serializers.ModelSerializer):
     """Serializer for GeneratorRun model."""
-    
+
     lottery_name = serializers.CharField(source="lottery.name", read_only=True)
     preset_name = serializers.CharField(source="preset.name", read_only=True, allow_null=True)
 
@@ -56,7 +56,7 @@ class GeneratorRunSerializer(serializers.ModelSerializer):
 
 class GenerateRequestSerializer(serializers.Serializer):
     """Request schema for generating games."""
-    
+
     count = serializers.IntegerField(min_value=1, max_value=50, default=1)
     config = serializers.JSONField(
         required=False,

@@ -3,10 +3,10 @@ Tests for lotteries app.
 """
 
 import pytest
-from django.urls import reverse
 from rest_framework import status
 
 from apps.lotteries.clients.caixa import CaixaLotteryClient
+from django.db import IntegrityError
 from apps.lotteries.models import Draw, Lottery, PrizeTier
 
 
@@ -41,7 +41,7 @@ def draw(db, lottery):
         location="ESPAÇO DA SORTE",
         city_state="SÃO PAULO, SP",
     )
-    
+
     # Create prize tiers
     PrizeTier.objects.create(
         draw=draw, tier=1, description="6 acertos", matches=6, winners_count=0, prize_value=0
@@ -52,7 +52,7 @@ def draw(db, lottery):
     PrizeTier.objects.create(
         draw=draw, tier=3, description="4 acertos", matches=4, winners_count=4069, prize_value=1071.64
     )
-    
+
     return draw
 
 
@@ -63,7 +63,7 @@ class TestLotteryAPI:
     def test_list_lotteries(self, client, lottery):
         """Test listing lotteries."""
         response = client.get("/api/lotteries/")
-        
+
         assert response.status_code == status.HTTP_200_OK
         assert len(response.json()) == 1
         assert response.json()[0]["slug"] == "megasena"
@@ -71,7 +71,7 @@ class TestLotteryAPI:
     def test_lottery_detail(self, client, lottery):
         """Test getting lottery details."""
         response = client.get(f"/api/lotteries/{lottery.slug}/")
-        
+
         assert response.status_code == status.HTTP_200_OK
         assert response.json()["name"] == "Mega-Sena"
         assert response.json()["numbers_count"] == 6
@@ -79,7 +79,7 @@ class TestLotteryAPI:
     def test_lottery_not_found(self, client):
         """Test 404 for non-existent lottery."""
         response = client.get("/api/lotteries/nonexistent/")
-        
+
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
@@ -90,7 +90,7 @@ class TestDrawAPI:
     def test_latest_draw(self, client, draw):
         """Test getting latest draw."""
         response = client.get(f"/api/lotteries/{draw.lottery.slug}/latest/")
-        
+
         assert response.status_code == status.HTTP_200_OK
         assert response.json()["number"] == 2954
         assert response.json()["numbers"] == [1, 9, 37, 39, 42, 44]
@@ -99,20 +99,20 @@ class TestDrawAPI:
     def test_latest_draw_no_draws(self, client, lottery):
         """Test 404 when no draws exist."""
         response = client.get(f"/api/lotteries/{lottery.slug}/latest/")
-        
+
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_draw_by_number(self, client, draw):
         """Test getting draw by number."""
         response = client.get(f"/api/lotteries/{draw.lottery.slug}/draws/{draw.number}/")
-        
+
         assert response.status_code == status.HTTP_200_OK
         assert response.json()["number"] == 2954
 
     def test_draw_list(self, client, draw):
         """Test listing draws with pagination."""
         response = client.get(f"/api/lotteries/{draw.lottery.slug}/draws/")
-        
+
         assert response.status_code == status.HTTP_200_OK
         assert response.json()["count"] == 1
         assert len(response.json()["results"]) == 1
@@ -138,7 +138,7 @@ class TestModels:
 
     def test_draw_unique_together(self, lottery, draw):
         """Test that lottery + number must be unique."""
-        with pytest.raises(Exception):
+        with pytest.raises(IntegrityError):
             Draw.objects.create(
                 lottery=lottery,
                 number=2954,  # Same as existing
@@ -153,7 +153,7 @@ class TestCaixaClient:
     def test_parse_date(self):
         """Test date parsing."""
         client = CaixaLotteryClient()
-        
+
         result = client._parse_date("20/12/2025")
         assert result.year == 2025
         assert result.month == 12
@@ -162,20 +162,20 @@ class TestCaixaClient:
     def test_parse_date_invalid(self):
         """Test invalid date returns None."""
         client = CaixaLotteryClient()
-        
+
         result = client._parse_date("invalid")
         assert result is None
 
     def test_parse_numbers(self):
         """Test number parsing."""
         client = CaixaLotteryClient()
-        
+
         result = client._parse_numbers(["01", "09", "37", "39", "42", "44"])
         assert result == [1, 9, 37, 39, 42, 44]
 
     def test_parse_numbers_empty(self):
         """Test empty list returns empty."""
         client = CaixaLotteryClient()
-        
+
         result = client._parse_numbers([])
         assert result == []

@@ -10,7 +10,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from apps.lotteries.models import Lottery
 from apps.generator.engine.core import BaseGenerator
 from apps.generator.models import GeneratorRun, Preset
 from apps.generator.serializers import (
@@ -18,6 +17,7 @@ from apps.generator.serializers import (
     GeneratorRunSerializer,
     PresetSerializer,
 )
+from apps.lotteries.models import Lottery
 
 
 @extend_schema_view(
@@ -48,24 +48,24 @@ class PresetViewSet(ModelViewSet):
     def run(self, request, pk=None):
         """Generate games using this preset."""
         preset = self.get_object()
-        
+
         serializer = GenerateRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
+
         count = serializer.validated_data["count"]
         # Allow overriding config
         override_config = serializer.validated_data.get("config", {})
-        
+
         final_config = preset.config.copy()
         final_config.update(override_config)
-        
+
         # Run generator
         try:
             generator = BaseGenerator(preset.lottery, final_config)
             games = generator.generate(count)
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         # Save run
         run = GeneratorRun.objects.create(
             user=request.user,
@@ -74,7 +74,7 @@ class PresetViewSet(ModelViewSet):
             count=count,
             result=games
         )
-        
+
         return Response(GeneratorRunSerializer(run).data)
 
 
@@ -104,25 +104,25 @@ class GeneratorRunViewSet(ModelViewSet):
         """Metadata for creating ad-hoc runs."""
         serializer = GenerateRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
+
         lottery_id = serializer.validated_data.get("lottery_id")
         if not lottery_id:
             return Response(
                 {"error": "lottery_id is required for ad-hoc generation."},
                 status=status.HTTP_400_BAD_REQUEST
             )
-            
+
         lottery = get_object_or_404(Lottery, id=lottery_id)
         config = serializer.validated_data.get("config", {})
         count = serializer.validated_data["count"]
-        
+
         # Run generator
         try:
             generator = BaseGenerator(lottery, config)
             games = generator.generate(count)
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         # Save run
         run = GeneratorRun.objects.create(
             user=request.user,
@@ -131,5 +131,5 @@ class GeneratorRunViewSet(ModelViewSet):
             count=count,
             result=games
         )
-        
+
         return Response(GeneratorRunSerializer(run).data, status=status.HTTP_201_CREATED)

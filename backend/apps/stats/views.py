@@ -16,7 +16,7 @@ class AggregatedStatsView(APIView):
     """
     Get aggregated statistics for a lottery.
     """
-    
+
     @extend_schema(
         summary="Estatísticas Agregadas",
         description="Retorna estatísticas agregadas (frequências, médias) para uma janela de sorteios.",
@@ -29,12 +29,12 @@ class AggregatedStatsView(APIView):
     )
     def get(self, request, slug):
         manager = StatsManager()
-        
+
         # Parse params
         window = request.query_params.get("window")
         start_date = request.query_params.get("start_date")
         end_date = request.query_params.get("end_date")
-        
+
         try:
             if window:
                 window = int(window)
@@ -47,6 +47,6 @@ class AggregatedStatsView(APIView):
                 {"error": "Invalid parameters format."},
                 status=status.HTTP_400_BAD_REQUEST
             )
-            
+
         stats = manager.get_aggregated_stats(slug, window, start_date, end_date)
         return Response(stats)

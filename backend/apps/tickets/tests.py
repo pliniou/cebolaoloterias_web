@@ -11,8 +11,6 @@ from rest_framework.test import APIClient
 
 from apps.lotteries.models import Draw, Lottery, PrizeTier
 from apps.tickets.models import (
-    LineCheckResult,
-    TicketCheckResult,
     UserBetLine,
     UserTicket,
 )
@@ -65,7 +63,7 @@ def draw(db, lottery):
         is_accumulated=True,
         accumulated_value=249261580.92,
     )
-    
+
     # Create prize tiers
     PrizeTier.objects.create(
         draw=draw, tier=1, description="6 acertos", matches=6,
@@ -79,7 +77,7 @@ def draw(db, lottery):
         draw=draw, tier=3, description="4 acertos", matches=4,
         winners_count=4069, prize_value=Decimal("1071.64")
     )
-    
+
     return draw
 
 
@@ -93,28 +91,28 @@ def ticket(db, user, lottery):
         numbers_per_bet=6,
         is_active=True,
     )
-    
+
     # Line with 4 hits: 1, 9, 37, 39 (missing 42, 44)
     UserBetLine.objects.create(
         ticket=ticket,
         numbers=[1, 9, 37, 39, 50, 55],
         order=0,
     )
-    
+
     # Line with 2 hits: 1, 9
     UserBetLine.objects.create(
         ticket=ticket,
         numbers=[1, 9, 10, 11, 12, 13],
         order=1,
     )
-    
+
     # Line with 0 hits
     UserBetLine.objects.create(
         ticket=ticket,
         numbers=[2, 3, 4, 5, 6, 7],
         order=2,
     )
-    
+
     return ticket
 
 
@@ -126,7 +124,7 @@ class TestCheckService:
         """Test checking a ticket against a draw."""
         service = TicketCheckService()
         result = service.check_ticket(ticket, draw)
-        
+
         assert result.ticket == ticket
         assert result.draw == draw
         assert result.best_hits == 4
@@ -138,19 +136,19 @@ class TestCheckService:
         """Test that line results are created correctly."""
         service = TicketCheckService()
         result = service.check_ticket(ticket, draw)
-        
+
         line_results = list(result.line_results.order_by("bet_line__order"))
-        
+
         # Line 1: 4 hits
         assert line_results[0].hits == 4
         assert set(line_results[0].hit_numbers) == {1, 9, 37, 39}
         assert line_results[0].prize_value == Decimal("1071.64")
-        
+
         # Line 2: 2 hits (no prize)
         assert line_results[1].hits == 2
         assert set(line_results[1].hit_numbers) == {1, 9}
         assert line_results[1].prize_value == Decimal("0")
-        
+
         # Line 3: 0 hits
         assert line_results[2].hits == 0
         assert line_results[2].hit_numbers == []
@@ -158,10 +156,10 @@ class TestCheckService:
     def test_check_ticket_already_checked(self, ticket, draw):
         """Test that checking same ticket/draw returns existing result."""
         service = TicketCheckService()
-        
+
         result1 = service.check_ticket(ticket, draw)
         result2 = service.check_ticket(ticket, draw)
-        
+
         assert result1.id == result2.id
 
     def test_check_ticket_wrong_lottery(self, ticket, lottery):
@@ -179,9 +177,9 @@ class TestCheckService:
             draw_date="2025-12-20",
             numbers=[1, 2, 3, 4, 5],
         )
-        
+
         service = TicketCheckService()
-        
+
         with pytest.raises(ValueError, match="different"):
             service.check_ticket(ticket, other_draw)
 
@@ -193,7 +191,7 @@ class TestTicketAPI:
     def test_list_tickets(self, api_client, ticket):
         """Test listing user's tickets."""
         response = api_client.get("/api/tickets/")
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["count"] == 1
@@ -210,7 +208,7 @@ class TestTicketAPI:
                 {"numbers": [10, 20, 30, 40, 50, 60]},
             ],
         }, format="json")
-        
+
         assert response.status_code == status.HTTP_201_CREATED
         assert UserTicket.objects.count() == 1
         assert UserBetLine.objects.count() == 2
@@ -218,7 +216,7 @@ class TestTicketAPI:
     def test_get_ticket_detail(self, api_client, ticket):
         """Test getting ticket details."""
         response = api_client.get(f"/api/tickets/{ticket.id}/")
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert len(data["bet_lines"]) == 3
@@ -226,14 +224,14 @@ class TestTicketAPI:
     def test_delete_ticket(self, api_client, ticket):
         """Test deleting a ticket."""
         response = api_client.delete(f"/api/tickets/{ticket.id}/")
-        
+
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert UserTicket.objects.count() == 0
 
     def test_check_ticket_latest(self, api_client, ticket, draw):
         """Test checking ticket against latest draw."""
         response = api_client.post(f"/api/tickets/{ticket.id}/check/")
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["best_hits"] == 4
@@ -246,7 +244,7 @@ class TestTicketAPI:
             {"draw_number": 2954},
             format="json",
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["draw"]["number"] == 2954
@@ -255,10 +253,10 @@ class TestTicketAPI:
         """Test getting check results history."""
         # First check the ticket
         api_client.post(f"/api/tickets/{ticket.id}/check/")
-        
+
         # Then get results
         response = api_client.get(f"/api/tickets/{ticket.id}/results/")
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["count"] == 1
@@ -266,7 +264,7 @@ class TestTicketAPI:
     def test_unauthorized_access(self, ticket):
         """Test that unauthenticated requests are rejected."""
         client = APIClient()
-        
+
         response = client.get("/api/tickets/")
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
@@ -281,6 +279,6 @@ class TestTicketAPI:
             name="Other's Ticket",
             numbers_per_bet=6,
         )
-        
+
         response = api_client.get(f"/api/tickets/{other_ticket.id}/")
         assert response.status_code == status.HTTP_404_NOT_FOUND

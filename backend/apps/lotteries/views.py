@@ -70,13 +70,13 @@ class LatestDrawView(APIView):
     def get(self, request, slug):
         lottery = get_object_or_404(Lottery, slug=slug, is_active=True)
         draw = lottery.draws.select_related("lottery").prefetch_related("prize_tiers").first()
-        
+
         if not draw:
             return Response(
                 {"detail": "Nenhum sorteio encontrado para esta loteria."},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        
+
         serializer = DrawSerializer(draw)
         return Response(serializer.data)
 
@@ -148,16 +148,16 @@ class SyncDrawView(APIView):
         lottery = get_object_or_404(Lottery, slug=slug, is_active=True)
         serializer = DrawSyncSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
+
         number = serializer.validated_data.get("number")
-        
+
         if number:
             # Sync specific draw
             result = sync_draw_by_number.delay(lottery.slug, number)
         else:
             # Sync latest draw
             result = sync_lottery_results.delay(lottery.slug)
-        
+
         return Response({
             "status": "queued",
             "message": f"Sync task queued for {lottery.name}",

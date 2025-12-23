@@ -61,7 +61,7 @@ from .services import TicketCheckService
 class UserTicketViewSet(ModelViewSet):
     """
     ViewSet for managing user tickets.
-    
+
     Provides CRUD operations for tickets and additional actions
     for managing bet lines and checking results.
     """
@@ -162,14 +162,14 @@ class UserTicketViewSet(ModelViewSet):
     def check(self, request, pk=None):
         """Check ticket against a draw."""
         ticket = self.get_object()
-        
+
         serializer = CheckRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
+
         draw_number = serializer.validated_data.get("draw_number")
-        
+
         service = TicketCheckService()
-        
+
         try:
             if draw_number:
                 result = service.check_ticket_by_draw_number(ticket, draw_number)
@@ -191,7 +191,7 @@ class UserTicketViewSet(ModelViewSet):
         """Get check results history for a ticket."""
         ticket = self.get_object()
         results = ticket.check_results.select_related("draw").all()
-        
+
         # Paginate results
         page = self.paginate_queryset(results)
         if page is not None:
@@ -241,7 +241,7 @@ class UserTicketViewSet(ModelViewSet):
 class UserBetLineViewSet(ModelViewSet):
     """
     ViewSet for managing bet lines.
-    
+
     Provides operations for viewing and deleting individual bet lines.
     """
 

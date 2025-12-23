@@ -43,7 +43,7 @@ class UserTicketAdmin(admin.ModelAdmin):
     search_fields = ["user__username", "user__email", "name"]
     readonly_fields = ["created_at", "updated_at"]
     inlines = [UserBetLineInline]
-    
+
     fieldsets = [
         (None, {
             "fields": ["user", "lottery", "name"],

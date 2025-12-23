@@ -25,7 +25,7 @@ class LotteryAdmin(admin.ModelAdmin):
     search_fields = ["name", "slug"]
     prepopulated_fields = {"slug": ("name",)}
     readonly_fields = ["created_at", "updated_at"]
-    
+
     fieldsets = [
         (None, {
             "fields": ["name", "slug", "api_identifier", "description"],
@@ -73,7 +73,7 @@ class DrawAdmin(admin.ModelAdmin):
     ]
     inlines = [PrizeTierInline]
     date_hierarchy = "draw_date"
-    
+
     def display_numbers(self, obj):
         """Display numbers as formatted string."""
         return " - ".join(str(n).zfill(2) for n in obj.numbers)

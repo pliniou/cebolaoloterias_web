@@ -4,7 +4,6 @@ Metrics calculator service.
 Pure logic for calculating lottery number metrics.
 """
 
-import math
 
 
 class StatsCalculator:
@@ -14,11 +13,11 @@ class StatsCalculator:
     def calculate_metrics(numbers: list[int], previous_numbers: list[int] | None = None) -> dict:
         """
         Calculate all metrics for a set of numbers.
-        
+
         Args:
             numbers: List of drawn numbers
             previous_numbers: List of numbers from the previous draw (optional)
-            
+
         Returns:
             Dict containing all calculated metrics
         """
@@ -34,7 +33,7 @@ class StatsCalculator:
             }
 
         sorted_numbers = sorted(numbers)
-        
+
         return {
             "sum_value": sum(numbers),
             "even_count": StatsCalculator.count_evens(numbers),
@@ -54,13 +53,13 @@ class StatsCalculator:
             return True
         if n % 2 == 0 or n % 3 == 0:
             return False
-        
+
         i = 5
         while i * i <= n:
             if n % i == 0 or n % (i + 2) == 0:
                 return False
             i += 6
-            
+
         return True
 
     @staticmethod
@@ -86,7 +85,7 @@ class StatsCalculator:
         """
         if len(sorted_numbers) < 2:
             return 0
-            
+
         count = 0
         for i in range(len(sorted_numbers) - 1):
             if sorted_numbers[i] + 1 == sorted_numbers[i + 1]:
@@ -98,8 +97,8 @@ class StatsCalculator:
         """Count numbers present in the previous draw."""
         if not previous_numbers:
             return 0
-            
+
         current_set = set(numbers)
         previous_set = set(previous_numbers)
-        
+
         return len(current_set & previous_set)
