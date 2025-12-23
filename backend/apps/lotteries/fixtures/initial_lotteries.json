@@ -10,7 +10,9 @@
             "min_number": 1,
             "max_number": 60,
             "color": "#209869",
-            "is_active": true
+            "is_active": true,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
         }
     },
     {
@@ -24,7 +26,9 @@
             "min_number": 1,
             "max_number": 25,
             "color": "#930089",
-            "is_active": true
+            "is_active": true,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
         }
     },
     {
@@ -38,7 +42,9 @@
             "min_number": 1,
             "max_number": 80,
             "color": "#260085",
-            "is_active": true
+            "is_active": true,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
         }
     },
     {
@@ -52,7 +58,9 @@
             "min_number": 0,
             "max_number": 99,
             "color": "#f78100",
-            "is_active": true
+            "is_active": true,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
         }
     },
     {
@@ -66,7 +74,9 @@
             "min_number": 1,
             "max_number": 80,
             "color": "#00ff00",
-            "is_active": true
+            "is_active": true,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
         }
     },
     {
@@ -80,7 +90,9 @@
             "min_number": 1,
             "max_number": 50,
             "color": "#a61317",
-            "is_active": true
+            "is_active": true,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
         }
     },
     {
@@ -94,7 +106,9 @@
             "min_number": 1,
             "max_number": 99999,
             "color": "#004785",
-            "is_active": true
+            "is_active": true,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
         }
     },
     {
@@ -108,7 +122,9 @@
             "min_number": 1,
             "max_number": 31,
             "color": "#cb852b",
-            "is_active": true
+            "is_active": true,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
         }
     },
     {
@@ -122,7 +138,9 @@
             "min_number": 0,
             "max_number": 9,
             "color": "#a8cf45",
-            "is_active": true
+            "is_active": true,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
         }
     }
 ]

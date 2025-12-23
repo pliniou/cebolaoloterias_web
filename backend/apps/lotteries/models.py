@@ -41,7 +41,7 @@ class Lottery(models.Model):
         default=1,
         verbose_name="Número mínimo",
     )
-    max_number = models.PositiveSmallIntegerField(
+    max_number = models.PositiveIntegerField(
         verbose_name="Número máximo",
         help_text="Maior número possível (ex: 60 para Mega-Sena)",
     )
