@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "light" | "dark" | "colorful";
+type Theme = "light" | "dark";
 
 interface ThemeContextType {
   theme: Theme;
@@ -13,7 +13,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("cebolao-theme") as Theme;
-      if (stored && ["light", "dark", "colorful"].includes(stored)) {
+      if (stored && ["light", "dark"].includes(stored)) {
         return stored;
       }
       if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -30,7 +30,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.classList.add("transitioning");
     
     // Remove all theme classes
-    root.classList.remove("light", "dark", "colorful");
+    root.classList.remove("light", "dark");
     
     // Add new theme class
     root.classList.add(theme);

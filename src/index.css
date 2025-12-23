@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
 @tailwind base;
 @tailwind components;
@@ -114,14 +115,26 @@
 
     /* Typography */
     --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Merriweather', Georgia, serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
-    --shadow: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
-    --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1);
+    /* Shadows - Flat Material Design */
+    --shadow-flat: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-flat-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-flat-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    /* Spacing - 4px/8px Scale */
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-3: 12px;
+    --spacing-4: 16px;
+    --spacing-5: 20px;
+    --spacing-6: 24px;
+    --spacing-8: 32px;
+    --spacing-10: 40px;
+    --spacing-12: 48px;
+    --spacing-16: 64px;
+    --spacing-20: 80px;
 
     /* Transitions */
     --transition-fast: 150ms;
@@ -184,98 +197,7 @@
     --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.4), 0 8px 10px -6px hsl(0 0% 0% / 0.4);
   }
 
-  .colorful {
-    /* Colorful Theme - Vibrant & Fun */
-    --background: 280 60% 98%;
-    --foreground: 280 50% 10%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 280 50% 10%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 280 50% 10%;
-
-    --primary: 280 85% 55%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 320 70% 95%;
-    --secondary-foreground: 280 50% 10%;
-
-    --muted: 280 30% 94%;
-    --muted-foreground: 280 20% 45%;
-
-    --accent: 170 80% 45%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 280 30% 88%;
-    --input: 280 30% 88%;
-    --ring: 280 85% 55%;
-
-    /* Lottery Colors - Vibrant version with scales */
-    --megasena-light: 158 74% 58%;
-    --megasena: 158 74% 48%;
-    --megasena-dark: 158 74% 38%;
-
-    --quina-light: 280 85% 65%;
-    --quina: 280 85% 55%;
-    --quina-dark: 280 85% 45%;
-
-    --lotofacil-light: 340 88% 62%;
-    --lotofacil: 340 88% 52%;
-    --lotofacil-dark: 340 88% 42%;
-
-    --lotomania-light: 30 95% 58%;
-    --lotomania: 30 95% 48%;
-    --lotomania-dark: 30 95% 38%;
-
-    --duplasena-light: 350 85% 55%;
-    --duplasena: 350 85% 45%;
-    --duplasena-dark: 350 85% 35%;
-
-    --timemania-light: 160 75% 55%;
-    --timemania: 160 75% 45%;
-    --timemania-dark: 160 75% 35%;
-
-    --diadesorte-light: 45 90% 52%;
-    --diadesorte: 45 90% 42%;
-    --diadesorte-dark: 45 90% 32%;
-
-    --supersete-light: 200 95% 52%;
-    --supersete: 200 95% 42%;
-    --supersete-dark: 200 95% 32%;
-
-    --federal-light: 280 65% 52%;
-    --federal: 280 65% 42%;
-    --federal-dark: 280 65% 32%;
-
-    --loteca-light: 160 84% 48%;
-    --loteca: 160 84% 38%;
-    --loteca-dark: 160 84% 28%;
-
-    --maismilionaria-light: 220 90% 55%;
-    --maismilionaria: 220 90% 45%;
-    --maismilionaria-dark: 220 90% 35%;
-
-    /* Sidebar */
-    --sidebar-background: 280 50% 99%;
-    --sidebar-foreground: 280 50% 10%;
-    --sidebar-primary: 280 85% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 320 70% 95%;
-    --sidebar-accent-foreground: 280 50% 10%;
-    --sidebar-border: 280 30% 88%;
-    --sidebar-ring: 280 85% 55%;
-
-    /* Charts */
-    --chart-1: 280 85% 55%;
-    --chart-2: 170 80% 45%;
-    --chart-3: 340 82% 52%;
-    --chart-4: 45 90% 45%;
-    --chart-5: 200 95% 45%;
-  }
 }
 
 @layer base {

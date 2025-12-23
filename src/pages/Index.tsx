@@ -12,8 +12,8 @@ const Index = () => {
     <Layout>
       <div className="p-4 lg:p-8 space-y-8 animate-fade-in">
         {/* Hero Section */}
-        <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary to-accent p-6 lg:p-10">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30"></div>
+        <section className="relative overflow-hidden rounded-2xl bg-primary p-6 lg:p-10 shadow-flat-lg">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00eiIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
           <div className="relative z-10">
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="h-5 w-5 text-primary-foreground" />
@@ -21,7 +21,7 @@ const Index = () => {
                 Bem-vindo ao
               </span>
             </div>
-            <h1 className="text-3xl lg:text-5xl font-bold text-primary-foreground mb-3">
+            <h1 className="text-3xl lg:text-5xl font-black font-serif text-primary-foreground mb-3 tracking-tight">
               Cebolão Loterias
             </h1>
             <p className="text-lg text-primary-foreground/90 max-w-xl">
@@ -72,7 +72,7 @@ const Index = () => {
                   href={`/${lottery.slug}`}
                   className="group"
                 >
-                  <Card className="hover-lift border-2 hover:border-primary transition-colors duration-200">
+                  <Card className="hover-lift border-0 shadow-flat hover:shadow-flat-md transition-all duration-300">
                     <CardContent className="p-4 flex flex-col items-center text-center">
                       <div
                         className="w-14 h-14 rounded-xl flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-110"

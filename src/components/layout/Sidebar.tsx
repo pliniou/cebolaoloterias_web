@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Home, Menu, X } from "lucide-react";
+import { Home, Menu, X, Gamepad2, CheckCircle, Wand } from "lucide-react";
 import { lotteries } from "@/lib/lotteries";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -50,11 +50,14 @@ export function Sidebar() {
                 cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                   isActive
-                    ? "bg-sidebar-accent text-sidebar-primary"
+                    ? "bg-primary text-primary-foreground shadow-flat"
                     : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                 )
               }
             >
+              <div className="w-5 h-5 flex items-center justify-center">
+                <Home className="h-4 w-4" />
+              </div>
               {isOpen && <span>Início</span>}
             </NavLink>
 
@@ -65,16 +68,13 @@ export function Sidebar() {
                 cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                   isActive
-                    ? "bg-sidebar-accent text-sidebar-primary"
+                    ? "bg-primary text-primary-foreground shadow-flat"
                     : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                 )
               }
             >
               <div className="w-5 h-5 flex items-center justify-center">
-                {/* Using standard Lucide icons directly referenced or imported */}
-                {/* Assuming Home, Menu, X are imported. I need to add imports for these new icons first if not present, but for now assuming Lucide package has them */}
-                {/* Let's use simple text for now or add imports in a separate chunk */}
-                <span className="text-lg leading-none">🎮</span>
+                <Gamepad2 className="h-4 w-4" />
               </div>
               {isOpen && <span>Meus Jogos</span>}
             </NavLink>
@@ -85,13 +85,13 @@ export function Sidebar() {
                 cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                   isActive
-                    ? "bg-sidebar-accent text-sidebar-primary"
+                    ? "bg-primary text-primary-foreground shadow-flat"
                     : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                 )
               }
             >
               <div className="w-5 h-5 flex items-center justify-center">
-                <span className="text-lg leading-none">✅</span>
+                <CheckCircle className="h-4 w-4" />
               </div>
               {isOpen && <span>Conferência</span>}
             </NavLink>
@@ -102,13 +102,13 @@ export function Sidebar() {
                 cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                   isActive
-                    ? "bg-sidebar-accent text-sidebar-primary"
+                    ? "bg-primary text-primary-foreground shadow-flat"
                     : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                 )
               }
             >
               <div className="w-5 h-5 flex items-center justify-center">
-                <span className="text-lg leading-none">✨</span>
+                <Wand className="h-4 w-4" />
               </div>
               {isOpen && <span>Gerador</span>}
             </NavLink>

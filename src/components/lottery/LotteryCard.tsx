@@ -3,6 +3,7 @@ import { LotteryBall } from "./LotteryBall";
 import { LotteryInfo } from "@/lib/lotteries";
 import { Calendar, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { generateRandomNumbers } from "@/lib/lottery-utils";
 
 interface LotteryCardProps {
   lottery: LotteryInfo;
@@ -22,13 +23,13 @@ export function LotteryCard({
   const Icon = lottery.icon;
 
   // Generate random numbers if none provided
-  const displayNumbers = numbers.length > 0 
-    ? numbers 
+  const displayNumbers = numbers.length > 0
+    ? numbers
     : generateRandomNumbers(lottery.numbers, lottery.range[0], lottery.range[1]);
 
   return (
-    <Card className={cn("overflow-hidden hover-lift border-2", className)}>
-      <CardHeader 
+    <Card className={cn("overflow-hidden hover-lift border-0 shadow-flat hover:shadow-flat-md transition-all", className)}>
+      <CardHeader
         className="p-4 text-primary-foreground"
         style={{ backgroundColor: `hsl(var(--${lottery.color}))` }}
       >
@@ -36,7 +37,7 @@ export function LotteryCard({
           <div className="flex items-center gap-3">
             <Icon className="h-6 w-6" />
             <div>
-              <h3 className="font-bold text-lg">{lottery.name}</h3>
+              <h1 className="font-bold text-lg font-serif">{lottery.name}</h1>
               <p className="text-sm opacity-90">Concurso {contestNumber}</p>
             </div>
           </div>
@@ -48,7 +49,7 @@ export function LotteryCard({
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent className="p-4">
         {/* Numbers */}
         <div className="flex flex-wrap gap-2 justify-center mb-4">
@@ -74,15 +75,4 @@ export function LotteryCard({
       </CardContent>
     </Card>
   );
-}
-
-function generateRandomNumbers(count: number, min: number, max: number): number[] {
-  const numbers: number[] = [];
-  while (numbers.length < count) {
-    const num = Math.floor(Math.random() * (max - min + 1)) + min;
-    if (!numbers.includes(num)) {
-      numbers.push(num);
-    }
-  }
-  return numbers.sort((a, b) => a - b);
 }

@@ -122,14 +122,18 @@ export default {
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["Merriweather", "Georgia", "serif"],
         mono: ["JetBrains Mono", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        sm: "var(--shadow-sm)",
-        DEFAULT: "var(--shadow)",
-        md: "var(--shadow-md)",
-        lg: "var(--shadow-lg)",
-        xl: "var(--shadow-xl)",
+        flat: "var(--shadow-flat)",
+        "flat-md": "var(--shadow-flat-md)",
+        "flat-lg": "var(--shadow-flat-lg)",
+        sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        DEFAULT: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
       },
       transitionDuration: {
         "150": "150ms",

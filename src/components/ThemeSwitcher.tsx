@@ -1,4 +1,4 @@
-import { Sun, Moon, Palette } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,8 +15,6 @@ export function ThemeSwitcher() {
     switch (theme) {
       case "dark":
         return <Moon className="h-5 w-5" />;
-      case "colorful":
-        return <Palette className="h-5 w-5" />;
       default:
         return <Sun className="h-5 w-5" />;
     }
@@ -39,10 +37,7 @@ export function ThemeSwitcher() {
           <Moon className="h-4 w-4" />
           <span>Escuro</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("colorful")} className="gap-2">
-          <Palette className="h-4 w-4" />
-          <span>Colorido</span>
-        </DropdownMenuItem>
+
       </DropdownMenuContent>
     </DropdownMenu>
   );
