@@ -5,6 +5,7 @@ Celery configuration for Cebola Loterias project.
 import os
 
 from celery import Celery
+import logging
 
 # Set default Django settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.dev")
@@ -22,4 +23,5 @@ app.autodiscover_tasks()
 @app.task(bind=True, ignore_result=True)
 def debug_task(self):
     """Debug task for testing Celery setup."""
-    print(f"Request: {self.request!r}")
+    logger = logging.getLogger(__name__)
+    logger.debug("Celery debug task request: %r", self.request)
